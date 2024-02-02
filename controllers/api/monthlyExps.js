@@ -19,12 +19,22 @@ module.exports = {
   }
 
     async function index(req, res){
-        const monthlys = await MonthlyExp.find({})
-        res.json(monthlys);
+        try{
+            const monthlys = await MonthlyExp.find({})
+            res.json(monthlys);
+        }catch(err){
+            console.log(err)
+            res.status(400).json(err);
+        }
    }
 
    async function deleteExp(req, res){
-    const monthlyExpId = req.param.id;
-    const deletedMonthlyExp = await MonthlyExp.findByIdAndDelete(monthlyExpId);
-    res.json({message: 'Job deleted', deletedMonthlyExp });
+    try{
+        const monthlyExpId = req.params.id;
+        const deletedMonthlyExp = await MonthlyExp.findByIdAndDelete(monthlyExpId);
+        res.json({message: 'Monthly Exp deleted', deletedMonthlyExp });
+    } catch(err){
+        console.log(err)
+        res.status(400).json(err);
+    }
    }

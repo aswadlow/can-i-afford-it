@@ -3,8 +3,10 @@ import MonthlyExp from '../../components/MonthlyExp/MonthlyExp'
 import './../../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import * as jobsAPI from '../../utilities/jobs-api'; 
 import * as monthlysAPI from '../../utilities/monthlys-api'; 
+import { Link } from "react-router-dom";
 
-export default function ProfilePage({jobs, setJobs, monthlyExps, setMonthlyExps, handleDeleteExp, getMonthlyExps, getJobs}) {
+
+export default function ProfilePage({jobs, setJobs, monthlyExps, setMonthlyExps, handleDeleteExp, getMonthlyExps, getJobs, addJob, addMonthlyExp}) {
 
   async function handleDeleteJob(jobId){
     await jobsAPI.deleteJob(jobId)
@@ -20,33 +22,49 @@ async function handleDeleteExp(monthlyExpId){
 
   return (
     <>
-      <JobForm jobs={jobs} setJobs={setJobs} getJobs={getJobs} />
-      <MonthlyExp monthlyExps={monthlyExps} setMonthlyExps={setMonthlyExps} getMonthlyExps={getMonthlyExps} />
-      <div className='display-jobs'>
+      <JobForm jobs={jobs} setJobs={setJobs} getJobs={getJobs} addJob={addJob} />
+      <MonthlyExp monthlyExps={monthlyExps} setMonthlyExps={setMonthlyExps} getMonthlyExps={getMonthlyExps} addMonthlyExp={addMonthlyExp} />
+      <div className='container'>
       {jobs.map((job, index) => { 
         if(job.job && job.money){
           return (
             <div key={index}>
-            Job: {job.job} Dollar Per Hour: {job.money}
-            <button onClick={() => handleDeleteJob(job._id)}>Delete Job</button>
+              <Link to={`/jobs/${job._id}`} >
+                <div className='row'> 
+                  <div>
+                    <div className='text-orange'>Job: {job.job} </div>
+                  </div>
+                </div> 
+                <div className='row'>
+                  Dollar Per Hour: {job.money}
+                </div>
+              </Link>
+              <button onClick={() => handleDeleteJob(job._id)}>Delete Job</button>
             </div>
           )
         }
       })}
       </div>
-      <div className='display-monthlys'>
+      <div className='container'>
       {monthlyExps.map((monthly, index) => { 
         if(monthly.expense && monthly.cost){
           return (
             <div key={index}>
-              Expense: {monthly.expense} cost: {monthly.cost}
+              <Link to={`/expenses/${monthly._id}`} >
+                <div className='row'>
+                  Expense: {monthly.expense}
+                </div>
+                <div className='row'>
+                  cost: {monthly.cost}
+                </div>
+              </Link>
               <button onClick={() => handleDeleteExp(monthly._id)}>Delete Monthly Expense</button>
             </div>
           )
         }
       })}
       </div>
-      <div className='MonthlyExpsTotal'>
+      <div className='container'>
         <h4>Monthly Total:</h4>
         {monthlyExps.reduce((acc, monthly) => acc + (monthly.cost || 0), 0)}
       </div>
