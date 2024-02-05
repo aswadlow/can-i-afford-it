@@ -13,3 +13,7 @@ export function addMonthlyExp(monthlyExpData) {
   export function deleteMonthlyExp(id) {
     return sendRequest(`${BASE_URL}/${id}`, 'DELETE');
   }
+
+  export function updateMonthly(expFormData, id){
+    return sendRequest(`${BASE_URL}/${id}/update`, 'PUT', expFormData )
+  }

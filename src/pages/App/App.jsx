@@ -17,10 +17,20 @@ export default function App() {
   const [monthlyExps, setMonthlyExps] = useState([])
 
   useEffect(function() {
+    async function getMonthlyExps() {
+      const newMonthlyExps = await monthlysAPI.getAll();
+      setMonthlyExps(newMonthlyExps)
+    }
+  
+    async function getJobs() {
+      const newJobs = await jobsAPI.getAll();
+      setJobs(newJobs)
+    }
 
     getJobs();
     getMonthlyExps();
   }, [])
+
 
 
   function addJob(newJob){
@@ -31,14 +41,18 @@ export default function App() {
     setMonthlyExps([...monthlyExps, newMonthlyExp])
   }
 
-  async function getMonthlyExps() {
-    const newMonthlyExps = await monthlysAPI.getAll();
-    setMonthlyExps(newMonthlyExps)
+  function updateJobsState(updatedJob){
+    const jobsCopy = [...jobs]
+    const idx = jobsCopy.findIndex(job => job._id === updatedJob._id)
+    jobsCopy[idx] = updatedJob
+    setJobs(jobsCopy)
   }
 
-  async function getJobs() {
-    const newJobs = await jobsAPI.getAll();
-    setJobs(newJobs)
+  function updateMonthlyExpState(updatedMonthlyExp){
+    const expCopy = [...monthlyExps]
+    const idx = expCopy.findIndex(exp => exp._id === updatedMonthlyExp._id)
+    expCopy[idx] = updatedMonthlyExp
+    setMonthlyExps(expCopy)
   }
 
 
@@ -49,9 +63,11 @@ export default function App() {
             <NavBar user={user} setUser={setUser} /> 
             <Routes>
               {/* Route components in here */}
-              <Route path="/profile" element={<ProfilePage jobs={jobs} setJobs={setJobs} monthlyExps={monthlyExps} setMonthlyExps={setMonthlyExps} getMonthlyExps={getMonthlyExps} getJobs={getJobs} addJob={addJob} addMonthlyExp={addMonthlyExp}  />} />
-              <Route path="/jobs/:id" element={<JobDetailsPage jobs={jobs}/>} />
-              <Route path="/expenses/:id" element={<MonthlyExpsDetailsPage monthlyExps={monthlyExps} />} />
+              <Route path="/profile" element={<ProfilePage jobs={jobs} setJobs={setJobs} 
+                monthlyExps={monthlyExps} setMonthlyExps={setMonthlyExps} 
+                addJob={addJob} addMonthlyExp={addMonthlyExp}  />} />
+              <Route path="/jobs/:id" element={<JobDetailsPage jobs={jobs} updateJobsState={updateJobsState}/>} />
+              <Route path="/expenses/:id" element={<MonthlyExpsDetailsPage monthlyExps={monthlyExps} updateMonthlyExpState={updateMonthlyExpState} />} />
               <Route path="/*" element={<Navigate to="/profile" />} />
             </Routes>
           </>

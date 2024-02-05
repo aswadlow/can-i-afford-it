@@ -4,7 +4,7 @@ module.exports = {
     create,
     index,
     deleteJob,
-    edit
+    update
   };
 
 async function create(req, res) {
@@ -39,10 +39,10 @@ async function deleteJob(req, res){
 }
  }
  
- async function edit(req, res){
+ async function update(req, res){
   try{
-    console.log(req.body)
-    res.json('ok')
+    const updatedJob = await Job.findByIdAndUpdate(req.params.id, req.body, {new: true})
+    res.json(updatedJob)
   } catch (err) {
     console.log(err)
     res.status(400).json(err);

@@ -8,8 +8,8 @@ router.post('/', jobsCtrl.create);
 router.get('/', jobsCtrl.index);
 // DELETE /api/jobs/id
 router.delete('/:id', jobsCtrl.deleteJob)
-// GET /api/jobs/id/edit
-router.get('/:id/edit', jobsCtrl.edit)
+// PUT /api/jobs/id/update
+router.put('/:id/update', jobsCtrl.update)
 
 
 module.exports = router;

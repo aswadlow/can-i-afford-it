@@ -3,7 +3,8 @@ const MonthlyExp = require('../../models/monthlyExp');
 module.exports = {
     create,
     index,
-    deleteExp
+    deleteExp,
+    update
   };
 
   async function create(req, res) {
@@ -36,5 +37,15 @@ module.exports = {
     } catch(err){
         console.log(err)
         res.status(400).json(err);
+    }
+   }
+
+   async function update(req, res){
+    try{
+      const updatedExp = await MonthlyExp.findByIdAndUpdate(req.params.id, req.body, {new: true})
+      res.json(updatedExp)
+    } catch (err) {
+      console.log(err)
+      res.status(400).json(err);
     }
    }

@@ -15,6 +15,6 @@ export function getAll() {
     return sendRequest(`${BASE_URL}/${id}`, 'DELETE');
   }
 
-  export function editJob(jobFormData, id){
-    return sendRequest(`${BASE_URL}/${id}/edit`, 'GET', jobFormData )
+  export function updateJob(formData, id){
+    return sendRequest(`${BASE_URL}/${id}/update`, 'PUT', formData )
   }

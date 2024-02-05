@@ -8,6 +8,8 @@ router.post('/', monthlyExpsCtrl.create);
 router.get('/', monthlyExpsCtrl.index);
 // DELETE api/monthlys/:id
 router.delete('/:id', monthlyExpsCtrl.deleteExp);
+// PUT /api/jobs/id/update
+router.put('/:id/update', monthlyExpsCtrl.update)
 
 
 module.exports = router;

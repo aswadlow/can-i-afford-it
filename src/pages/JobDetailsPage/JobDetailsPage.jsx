@@ -1,36 +1,38 @@
-import { useState} from 'react';
+import React, { useState } from 'react';
 import JobEditForm from "../../components/JobEditForm/JobEditForm";
 import { useParams } from "react-router-dom";
-import * as jobsAPI from '../../utilities/jobs-api'; 
 
 
-
-
-export default function JobDetails({jobs, jobFormData, setJobFormData}){
-    const [showJobDetails, setShowJobDetails] = useState('false')
+export default function JobDetails({jobs, updateJobsState}){
+    const [showForm, setShowForm] = useState(false);
     const { id } = useParams();
-    const jobDetail = jobs.find((job) => job._id === id )
+    const job = jobs.find((job) => job._id === id);
     
-   
-    async function handleJobEdit(evt){
-        setShowJobDetails(true)
+    function handleButtonClick(){
+        setShowForm(!showForm);
     }
 
-
     return (
-        <>
-            {showJobDetails ? (
-                <JobEditForm jobFormData={jobFormData}  />
-            ) : (
-                <div className="container">
-                    <h2>Job Details</h2>
-                    <p>Job: {jobDetail.job}</p>
-                    <p>Dollar per Hour: ${jobDetail.money}</p>
-                    <button onClick={handleJobEdit}>Edit Job</button>
-                    {showJobDetails && <button type='button' onClick={() => setShowJobDetails(false)}>Cancel</button>}
-                </div>
-            )}
-        </>
-    )
+        <div className="container mt-4">
+          {showForm ? (
+            <JobEditForm job={job} setShowForm={setShowForm} updateJobsState={updateJobsState} />
+          ) : (
+            <>
+              <h2>Job Details</h2>
+              {job ? (
+                <>
+                  <p>Job: {job.job}</p>
+                  <p>Dollar per Hour: ${job.money}</p>
+                  <button onClick={handleButtonClick} className="btn btn-primary">
+                    {showForm ? 'Hide' : 'Show'} Edit Form
+                  </button>
+                </>
+              ) : (
+                <p>Loading...</p>
+              )}
+            </>
+          )}
+        </div>
+    );
 }
 
