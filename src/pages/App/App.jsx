@@ -7,9 +7,12 @@ import AuthPage from '../AuthPage/AuthPage';
 import ProfilePage from '../ProfilePage/ProfilePage';
 import JobDetailsPage from '../JobDetailsPage/JobDetailsPage';
 import MonthlyExpsDetailsPage from '../MonthlyExpsDetailsPage/MonthlyExpsDetailsPage';
+import CalculatorPage from '../CalculatorPage/CalculatorPage';
 import NavBar from '../../components/NavBar/NavBar';
 import * as jobsAPI from '../../utilities/jobs-api'; 
 import * as monthlysAPI from '../../utilities/monthlys-api';
+import * as hoursAPI from '../../utilities/hours-api';
+
 
 export default function App() {
   const [user, setUser] = useState(getUser());
@@ -30,7 +33,6 @@ export default function App() {
     getJobs();
     getMonthlyExps();
   }, [])
-
 
 
   function addJob(newJob){
@@ -68,6 +70,7 @@ export default function App() {
                 addJob={addJob} addMonthlyExp={addMonthlyExp}  />} />
               <Route path="/jobs/:id" element={<JobDetailsPage jobs={jobs} updateJobsState={updateJobsState}/>} />
               <Route path="/expenses/:id" element={<MonthlyExpsDetailsPage monthlyExps={monthlyExps} updateMonthlyExpState={updateMonthlyExpState} />} />
+              <Route path="/hours" element={<CalculatorPage jobs={jobs}/>} />
               <Route path="/*" element={<Navigate to="/profile" />} />
             </Routes>
           </>

@@ -1,5 +1,6 @@
 const Job = require('../../models/job');
 
+
 module.exports = {
     create,
     index,

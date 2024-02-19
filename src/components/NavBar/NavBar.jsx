@@ -13,7 +13,7 @@ export default function NavBar({ user, setUser }) {
     <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
       <div className='container-xxl'>
         <Link className='navbar-brand' to="/profile">Profile</Link>
-
+        <Link className='navbar-brand' to="/hours">Calculator</Link>
         <button className='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation'>
           <span className='navbar-toggler-icon'></span>
         </button>

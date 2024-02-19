@@ -21,6 +21,8 @@ export default function ProfilePage({jobs, setJobs, monthlyExps, setMonthlyExps,
   }
 
   return (
+    <>
+    <h2>Can I Afford it? - A modern Budgeting Calculator</h2>
     <div className='container'>
       <div className='row'>
         <div className='col-md-6'>
@@ -67,6 +69,7 @@ export default function ProfilePage({jobs, setJobs, monthlyExps, setMonthlyExps,
         </div>
       </div>
     </div>
+    </>
   );
 }
 
